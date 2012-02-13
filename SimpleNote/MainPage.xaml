@@ -127,6 +127,7 @@
                          AcceptsReturn="True"
                          TextWrapping="Wrap"
                          Text="Sample First"   
+                         FontFamily="Comic Sans MS"
                          Style="{StaticResource FontFix}"
                          />
 
