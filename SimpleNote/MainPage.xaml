@@ -25,6 +25,7 @@
 			<Setter Property="SelectionBackground" Value="{StaticResource PhoneAccentBrush}"/>
 			<Setter Property="SelectionForeground" Value="{StaticResource PhoneTextBoxSelectionForegroundBrush}"/>
 			<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+            <Setter Property="CaretBrush" Value="{StaticResource PhoneAccentBrush}"/>
 			<Setter Property="Padding" Value="2"/>
 			<Setter Property="Template">
 				<Setter.Value>
@@ -125,7 +126,7 @@
                          Visibility="Visible"
                          AcceptsReturn="True"
                          TextWrapping="Wrap"
-                         Text="Sample First"                     
+                         Text="Sample First"   
                          Style="{StaticResource FontFix}"
                          />
 
