@@ -17,7 +17,7 @@ namespace SimpleNote
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        bool okToScroll = false;
+        //bool okToScroll = false;
 
         // Constructor
         public MainPage()
