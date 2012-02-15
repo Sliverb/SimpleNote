@@ -123,6 +123,7 @@
 
                 <TextBox HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
+                         Height="auto"
                          Name="noteTextBlock"
                          Visibility="Visible"
                          AcceptsReturn="True"
@@ -130,6 +131,7 @@
                          Text="Sample First"   
                          FontFamily="Comic Sans MS"
                          TextChanged="noteTextBlock_Changed"
+                         InputScope="text"
                          Style="{StaticResource FontFix}"
                          />
 

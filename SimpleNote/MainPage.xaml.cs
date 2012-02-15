@@ -19,6 +19,10 @@ namespace SimpleNote
     {
         //bool okToScroll = false;
 
+        // 3 states, 
+        // 1 -> edit ; 2 -> save ; 3 -> delete
+        int state = 0;
+
         // Constructor
         public MainPage()
         {
@@ -32,21 +36,29 @@ namespace SimpleNote
 
         private void noteTextBlock_Changed(object sender, TextChangedEventArgs e)
         {
-            //if (okToScroll && (noteTextBlock.SelectionStart == noteTextBlock.Text.Length))
-            //{
-                noteScrollViewer.ScrollToVerticalOffset(noteTextBlock.ActualHeight);
-            //}
-            //okToScroll = true;
+            scrollJump();
         }
 
         private void appBar_Edit(object sender, EventArgs e)
         {
+            if (state != 1)
+            {
 
+            }
+            noteTextBlock.Focus();
+            noteTextBlock.Select(noteTextBlock.Text.Length, 0);
+            scrollJump();
+            state = 1;
         }
 
         private void appBar_Save(object sender, EventArgs e)
         {
-
+            if (state != 2)
+            {
+               
+            }
+            this.Focus();
+            state = 2;
         }
 
         private void appBar_Delete(object sender, EventArgs e)
@@ -78,8 +90,15 @@ namespace SimpleNote
                     sw.WriteLine(noteTextBlock.Text);
                 }
             }
+        }
 
-
+        public void scrollJump()
+        {
+            //if (okToScroll && (noteTextBlock.SelectionStart == noteTextBlock.Text.Length))
+            //{
+            noteScrollViewer.ScrollToVerticalOffset(noteTextBlock.ActualHeight);
+            //}
+            //okToScroll = true;
         }
 
     }
