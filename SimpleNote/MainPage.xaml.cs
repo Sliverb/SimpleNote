@@ -32,17 +32,21 @@ namespace SimpleNote
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
+            loadNote();           
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
             object myState;
             if (phoneAppService.State.ContainsKey("MyState"))
             {
                 if (phoneAppService.State.TryGetValue("MyState", out myState))
                 {
-                    this.state = (int) myState;
+                    this.state = (int)myState;
                 }
             }
-
-            //loadNote();
-            noteTextBlock.Text = noteTextBlock.Text + Environment.NewLine + state.ToString();
 
             if (state == 1)
             {
