@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using System.IO.IsolatedStorage;
 using System.IO;
+using Microsoft.Phone.Shell;
 
 namespace SimpleNote
 {
@@ -19,9 +20,9 @@ namespace SimpleNote
     {
         //bool okToScroll = false;
 
-        // 3 states, 
         // 1 -> edit ; 2 -> save ; 3 -> delete
         int state = 0;
+        PhoneApplicationService phoneAppService = PhoneApplicationService.Current;
 
         // Constructor
         public MainPage()
@@ -31,12 +32,31 @@ namespace SimpleNote
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
+            object myState;
+            if (phoneAppService.State.ContainsKey("MyState"))
+            {
+                if (phoneAppService.State.TryGetValue("MyState", out myState))
+                {
+                    this.state = (int) myState;
+                }
+            }
 
+            loadNote();
+
+            if (state == 1)
+            {
+                prepEdit();
+            }
         }
 
         private void noteTextBlock_Changed(object sender, TextChangedEventArgs e)
         {
             scrollJump();
+        }
+
+        private void noteTextBlock_Focus(object sender, RoutedEventArgs e)
+        {
+            updateState(1);
         }
 
         private void appBar_Edit(object sender, EventArgs e)
@@ -45,25 +65,23 @@ namespace SimpleNote
             {
 
             }
-            noteTextBlock.Focus();
-            noteTextBlock.Select(noteTextBlock.Text.Length, 0);
-            scrollJump();
-            state = 1;
+            prepEdit();
+            updateState(1);
         }
 
         private void appBar_Save(object sender, EventArgs e)
         {
             if (state != 2)
             {
-               
+                saveNote();
             }
             this.Focus();
-            state = 2;
+            updateState(2);
         }
 
         private void appBar_Delete(object sender, EventArgs e)
         {
-
+            updateState(3);
         }
 
         private void loadNote()
@@ -101,6 +119,18 @@ namespace SimpleNote
             //okToScroll = true;
         }
 
+        private void updateState(int stateNum)
+        {
+            this.state = stateNum;
+            phoneAppService.State["MyState"] = this.state;
+        }
+
+        private void prepEdit()
+        {
+            noteTextBlock.Focus();
+            noteTextBlock.Select(noteTextBlock.Text.Length, 0);
+            scrollJump();
+        }
     }
 
 }

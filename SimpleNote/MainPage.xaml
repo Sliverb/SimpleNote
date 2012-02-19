@@ -131,6 +131,7 @@
                          Text="Sample First"   
                          FontFamily="Comic Sans MS"
                          TextChanged="noteTextBlock_Changed"
+                         GotFocus="noteTextBlock_Focus"
                          InputScope="text"
                          Style="{StaticResource FontFix}"
                          />
