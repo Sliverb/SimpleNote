@@ -41,7 +41,8 @@ namespace SimpleNote
                 }
             }
 
-            loadNote();
+            //loadNote();
+            noteTextBlock.Text = noteTextBlock.Text + Environment.NewLine + state.ToString();
 
             if (state == 1)
             {
@@ -57,6 +58,12 @@ namespace SimpleNote
         private void noteTextBlock_Focus(object sender, RoutedEventArgs e)
         {
             updateState(1);
+        }
+
+
+        private void noteTextBlock_unFocus(object sender, RoutedEventArgs e)
+        {
+            updateState(0);
         }
 
         private void appBar_Edit(object sender, EventArgs e)

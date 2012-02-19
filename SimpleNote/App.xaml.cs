@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.IO.IsolatedStorage;
 
 namespace SimpleNote
 {
@@ -63,18 +64,21 @@ namespace SimpleNote
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            LoadState();
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            LoadState();
         }
 
         // Code to execute when the application is deactivated (sent to background)
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            SaveState();
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
@@ -100,6 +104,31 @@ namespace SimpleNote
             {
                 // An unhandled exception has occurred; break into the debugger
                 System.Diagnostics.Debugger.Break();
+            }
+        }
+
+        private void SaveState()
+        {
+            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;
+            IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+
+            // Take whatever is in our temporary "state bag" and save it to
+            // the phone's permanent flash memory.
+            if (phoneAppService.State.ContainsKey("MyState"))
+            {
+                settings["MyState"] = phoneAppService.State["MyState"];
+            }
+        }
+
+        private void LoadState()
+        {
+            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;
+            IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+
+            int myState = 0;
+            if (settings.TryGetValue<int>("MyState", out myState))
+            {
+                phoneAppService.State["MyState"] = myState;
             }
         }
 
